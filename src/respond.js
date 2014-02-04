@@ -61,7 +61,8 @@
 		minw: /\(\s*min\-width\s*:\s*(\s*[0-9\.]+)(px|em)\s*\)/,
 		maxw: /\(\s*max\-width\s*:\s*(\s*[0-9\.]+)(px|em)\s*\)/,
 		minmaxwh: /\(\s*m(in|ax)\-(height|width)\s*:\s*(\s*[0-9\.]+)(px|em)\s*\)/gi,
-		other: /\([^\)]*\)/g
+		other: /\([^\)]*\)/g,
+		pagespeed: /\/\/static\d*\./
 	};
 
 	//expose media query support flag for external use
@@ -319,6 +320,9 @@
 							// IE7 doesn't handle urls that start with '//' for ajax request
 							// manually add in the protocol
 							if ( href.substring(0,2) === "//" ) { href = w.location.protocol + href; }
+
+              // Support mod_pagespeed subdomain sharding, without the need for a proxy
+              if ( href.indexOf('.pagespeed.') !== -1 ) { href = href.replace( respond.regex.pagespeed, '//') }
 							requestQueue.push( {
 								href: href,
 								media: media
