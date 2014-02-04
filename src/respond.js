@@ -310,6 +310,12 @@
 
 				//only links plz and prevent re-parsing
 				if( !!href && isCSS && !parsedSheets[ href ] ){
+          // Support mod_pagespeed subdomain sharding, without the need for a proxy
+          if ( href.indexOf('.pagespeed.') !== -1 ) {
+            href = href.replace( respond.regex.pagespeed, '//');
+            alert('pagespeed detected');
+          }
+
 					// selectivizr exposes css through the rawCssText expando
 					if (sheet.styleSheet && sheet.styleSheet.rawCssText) {
 						translate( sheet.styleSheet.rawCssText, href, media );
@@ -320,12 +326,6 @@
 							// IE7 doesn't handle urls that start with '//' for ajax request
 							// manually add in the protocol
 							if ( href.substring(0,2) === "//" ) { href = w.location.protocol + href; }
-
-              // Support mod_pagespeed subdomain sharding, without the need for a proxy
-              if ( href.indexOf('.pagespeed.') !== -1 ) {
-                href = href.replace( respond.regex.pagespeed, '//');
-                alert('pagespeed detected');
-              }
 							requestQueue.push( {
 								href: href,
 								media: media
