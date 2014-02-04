@@ -313,7 +313,6 @@
           // Support mod_pagespeed subdomain sharding, without the need for a proxy
           if ( href.indexOf('.pagespeed.') !== -1 ) {
             href = href.replace( respond.regex.pagespeed, '//');
-            alert('pagespeed detected');
           }
 
 					// selectivizr exposes css through the rawCssText expando
